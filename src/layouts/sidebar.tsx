@@ -1,56 +1,149 @@
 "use client";
 
-import Link from "next/link";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { cn } from "@/lib/utils";
+import {
+  Home,
+  SquareTerminal,
+  Palette,
+  Type,
+  LayoutPanelLeft,
+  Square,
+  Layers,
+  Component,
+  Cog,
+} from "lucide-react";
 
-const navItems = [
-  {
-    section: "Getting Started",
-    items: [{ label: "Introduction", href: "/components" }],
-  },
-  {
-    section: "UI Components",
-    items: [
-      { label: "Button", href: "/components/button" },
-      { label: "Card", href: "/components/card" },
-      { label: "Navbar", href: "/components/navbar" },
-      { label: "Typography", href: "/components/typography" },
-      { label: "Forms", href: "/components/forms" },
-    ],
-  },
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
+} from "@/components/ui/sidebar";
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
+// Sidebar groups
+const foundationItems = [
+  { title: "Installation", url: "/docs/installation", icon: SquareTerminal },
+  { title: "Typography", url: "/docs/typography", icon: Type },
+  { title: "Colors", url: "/docs/colors", icon: Palette },
+  { title: "Layout", url: "/docs/layout", icon: LayoutPanelLeft },
 ];
 
-export default function Sidebar({ current }: { current?: string }) {
+const componentItems = [
+  { title: "Button", url: "/components/button", icon: Square },
+  { title: "Input", url: "/components/input", icon: Component },
+  { title: "Card", url: "/components/card", icon: Layers },
+  { title: "Navbar", url: "/components/navbar", icon: LayoutPanelLeft },
+  { title: "Sidebar", url: "/components/sidebar", icon: LayoutPanelLeft },
+];
+
+const systemItems = [
+  { title: "Home", url: "/", icon: Home },
+  { title: "Settings", url: "/settings", icon: Cog },
+];
+
+// A small helper so we don't repeat tooltip condition everywhere
+function MaybeTooltip({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  const { state } = useSidebar(); // gives us { open, openMobile, ... }
+
+  // Only wrap in tooltip if collapsed (icon mode)
+  if (state === "collapsed") {
+    return (
+      <Tooltip>
+        <TooltipTrigger asChild>{children}</TooltipTrigger>
+        <TooltipContent side="right">{label}</TooltipContent>
+      </Tooltip>
+    );
+  }
+
+  return <>{children}</>;
+}
+
+export function AppSidebar() {
   return (
-    <div className="w-64 border-r bg-background">
-      <ScrollArea className="h-screen px-4 py-6">
-        <div className="space-y-8">
-          {navItems.map((group) => (
-            <div key={group.section} className="space-y-2">
-              <h4 className="px-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                {group.section}
-              </h4>
-              <div className="flex flex-col gap-1">
-                {group.items.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={cn(
-                      "px-3 py-2 rounded-md text-sm transition-colors hover:bg-muted",
-                      current === item.href
-                        ? "bg-muted font-semibold text-foreground"
-                        : "text-muted-foreground"
-                    )}
-                  >
-                    {item.label}
-                  </Link>
+    <Sidebar collapsible="icon">
+      <SidebarContent>
+        <TooltipProvider delayDuration={200}>
+          {/* Foundations */}
+          <SidebarGroup>
+            <SidebarGroupLabel>Foundations</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {foundationItems.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <MaybeTooltip label={item.title}>
+                      <SidebarMenuButton asChild>
+                        <a href={item.url}>
+                          <item.icon className="h-4 w-4" />
+                          <span>{item.title}</span>
+                        </a>
+                      </SidebarMenuButton>
+                    </MaybeTooltip>
+                  </SidebarMenuItem>
                 ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </ScrollArea>
-    </div>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+
+          {/* Components */}
+          <SidebarGroup>
+            <SidebarGroupLabel>Components</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {componentItems.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <MaybeTooltip label={item.title}>
+                      <SidebarMenuButton asChild>
+                        <a href={item.url}>
+                          <item.icon className="h-4 w-4" />
+                          <span>{item.title}</span>
+                        </a>
+                      </SidebarMenuButton>
+                    </MaybeTooltip>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+
+          {/* System */}
+          <SidebarGroup>
+            <SidebarGroupLabel>System</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {systemItems.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <MaybeTooltip label={item.title}>
+                      <SidebarMenuButton asChild>
+                        <a href={item.url}>
+                          <item.icon className="h-4 w-4" />
+                          <span>{item.title}</span>
+                        </a>
+                      </SidebarMenuButton>
+                    </MaybeTooltip>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </TooltipProvider>
+      </SidebarContent>
+    </Sidebar>
   );
 }

@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Utensils, Layout, Smartphone, Palette } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -19,8 +20,8 @@ export default function Home() {
         </p>
         <div className="flex gap-4 justify-center">
           <Button size="lg">Get Started</Button>
-          <Button size="lg" variant="outline">
-            View Components
+          <Button size="lg" variant="outline" asChild>
+            <Link href={"/docs"}>View Components</Link>
           </Button>
         </div>
       </section>
