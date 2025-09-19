@@ -5,6 +5,7 @@
 import Link from "next/link";
 import { Github, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ModeToggle } from "@/components/ui/mode-toggle";
 
 export default function Navbar() {
   return (
@@ -49,13 +50,14 @@ export default function Navbar() {
             aria-label="GitHub Repository"
           >
             <Link
-              href="https://github.com/your-username/restaurant-design-system"
+              href="https://github.com/QuickPrimeTech/restaurant-design-system"
               target="_blank"
               rel="noopener noreferrer"
             >
               <Github className="size-5" />
             </Link>
           </Button>
+          <ModeToggle />
         </div>
       </div>
     </nav>
