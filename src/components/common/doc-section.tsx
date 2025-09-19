@@ -7,12 +7,13 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { InstallSnippet } from "./install-snippet";
 import { InstallSnippet as InstallSnippetType } from "@/types/install-guide";
 import { CodeSnippet } from "@/types/code-snippet";
+import { Body, H2 } from "@/components/app/typography";
 
 type DocSectionProps = {
   title: string;
   description: string;
   preview?: React.ReactNode;
-  code?: CodeSnippet | null; // ✅ make optional + nullable
+  code?: CodeSnippet | null;
   installSnippets?: InstallSnippetType[];
 };
 
@@ -24,19 +25,20 @@ export const DocSection = ({
   installSnippets,
 }: DocSectionProps) => {
   let normalizedSnippets: {
-    language?: string;
-    filename?: string;
+    language: string;
+    filename: string;
     code: string;
   }[] = [];
 
   let livePreview: React.ReactNode | null = null;
 
   if (code && React.isValidElement(code)) {
-    // Case 1: Raw JSX passed
+    // Case 1: JSX
     livePreview = code;
     normalizedSnippets = [
       {
         language: "tsx",
+        filename: "Example",
         code: jsxToString(code, {
           showDefaultProps: false,
           showFunctions: true,
@@ -45,15 +47,21 @@ export const DocSection = ({
       },
     ];
   } else if (code && typeof code === "object" && "code" in code) {
-    // Case 2: Object with code + optional filename
-    normalizedSnippets = [code];
+    // Case 2: Code object
+    normalizedSnippets = [
+      {
+        language: "tsx", // ✅ force tsx
+        filename: "Example", // ✅ force Example
+        code: code.code,
+      },
+    ];
   }
 
   return (
     <section className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
-        <p className="text-muted-foreground">{description}</p>
+      <div className="space-y-1.5">
+        <H2 className="tracking-tight">{title}</H2>
+        <Body className="text-muted-foreground">{description}</Body>
       </div>
 
       {installSnippets && <InstallSnippet installSnippets={installSnippets} />}

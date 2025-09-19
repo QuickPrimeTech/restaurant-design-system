@@ -6,6 +6,7 @@ import { InstallSnippet as InstallSnippetType } from "@/types/install-guide";
 import { BackgroundGradient } from "../ui/background-gradient";
 import { Check, Copy } from "lucide-react"; // Make sure lucide-react is installed
 import { Button } from "../ui/button";
+import { H2 } from "@/components/app/typography";
 
 type InstallSnippetProps = {
   installSnippets: InstallSnippetType[];
@@ -22,7 +23,7 @@ export const InstallSnippet = ({ installSnippets }: InstallSnippetProps) => {
 
   return (
     <div>
-      <h3 className="text-lg font-semibold mb-2">Installation</h3>
+      <H2 className="mb-2">Installation</H2>
       <Tabs
         defaultValue={installSnippets[0]?.filename ?? "pnpm"}
         className="w-full"

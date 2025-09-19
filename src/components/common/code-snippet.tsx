@@ -17,8 +17,8 @@ import {
 } from "@/components/ui/kibo-ui/code-block";
 
 type NormalizedSnippet = {
-  language?: string;
-  filename?: string;
+  language: string; // ✅ required
+  filename: string;
   code: string;
 };
 
@@ -46,21 +46,6 @@ export const SnippetBlock = ({
               </CodeBlockFilename>
             )}
           </CodeBlockFiles>
-          <CodeBlockSelect>
-            <CodeBlockSelectTrigger>
-              <CodeBlockSelectValue />
-            </CodeBlockSelectTrigger>
-            <CodeBlockSelectContent>
-              {(item) => (
-                <CodeBlockSelectItem
-                  key={`${item.language}-${item.filename}`}
-                  value={item.language}
-                >
-                  {item.filename ?? item.language}
-                </CodeBlockSelectItem>
-              )}
-            </CodeBlockSelectContent>
-          </CodeBlockSelect>
         </>
       )}
       <CodeBlockCopyButton />
