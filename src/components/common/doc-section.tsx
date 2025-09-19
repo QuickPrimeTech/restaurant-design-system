@@ -1,59 +1,85 @@
+// @/components/common/doc-section.tsx
 "use client";
-
+import React from "react";
+import jsxToString from "react-element-to-jsx-string";
 import { SnippetBlock } from "./code-snippet";
-import { CodeSnippet } from "@/types/code-snippet";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { InstallSnippet } from "./install-guide";
+import { InstallSnippet } from "./install-snippet";
 import { InstallSnippet as InstallSnippetType } from "@/types/install-guide";
-import { LiveProvider, LivePreview } from "react-live";
+import { CodeSnippet } from "@/types/code-snippet";
 
 type DocSectionProps = {
   title: string;
   description: string;
   preview?: React.ReactNode;
-  code: CodeSnippet[];
-  installSnippets: InstallSnippetType[];
+  code?: CodeSnippet | null; // ✅ make optional + nullable
+  installSnippets?: InstallSnippetType[];
 };
 
-// Main DocSection component
 export const DocSection = ({
   title,
   description,
   preview,
   code,
   installSnippets,
-}: DocSectionProps) => (
-  <section className="space-y-6">
-    <div>
-      <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
-      <p className="text-muted-foreground">{description}</p>
-    </div>
-    {/* Installation */}
-    <InstallSnippet installSnippets={installSnippets} />
+}: DocSectionProps) => {
+  let normalizedSnippets: {
+    language?: string;
+    filename?: string;
+    code: string;
+  }[] = [];
 
-    <Tabs defaultValue="code" className="w-full">
-      <TabsList className="mb-4">
-        <TabsTrigger value="code">Code Preview</TabsTrigger>
-        <TabsTrigger value="preview">Live Preview</TabsTrigger>
-      </TabsList>
+  let livePreview: React.ReactNode | null = null;
 
-      {/* Live Preview (only if passed) */}
-      <TabsContent value="preview" className="space-y-4">
-        <div className="border rounded-lg p-6 bg-card">
-          {preview ? (
-            preview
+  if (code && React.isValidElement(code)) {
+    // Case 1: Raw JSX passed
+    livePreview = code;
+    normalizedSnippets = [
+      {
+        language: "tsx",
+        code: jsxToString(code, {
+          showDefaultProps: false,
+          showFunctions: true,
+          useBooleanShorthandSyntax: false,
+        }),
+      },
+    ];
+  } else if (code && typeof code === "object" && "code" in code) {
+    // Case 2: Object with code + optional filename
+    normalizedSnippets = [code];
+  }
+
+  return (
+    <section className="space-y-6">
+      <div>
+        <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
+        <p className="text-muted-foreground">{description}</p>
+      </div>
+
+      {installSnippets && <InstallSnippet installSnippets={installSnippets} />}
+
+      <Tabs defaultValue="preview" className="w-full">
+        <TabsList className="mb-4">
+          <TabsTrigger value="preview">Live Preview</TabsTrigger>
+          <TabsTrigger value="code">Code</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="preview" className="space-y-4">
+          <div className="border rounded-lg p-6 bg-card">
+            {preview ?? livePreview ?? (
+              <p className="text-muted-foreground">No preview available</p>
+            )}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="code" className="space-y-4">
+          {normalizedSnippets.length > 0 ? (
+            <SnippetBlock data={normalizedSnippets} />
           ) : (
-            <LiveProvider code={code[0].code}>
-              <LivePreview />
-            </LiveProvider>
+            <p className="text-muted-foreground">No code available</p>
           )}
-        </div>
-      </TabsContent>
-
-      {/* Code Preview */}
-      <TabsContent value="code" className="space-y-4">
-        <SnippetBlock data={code} />
-      </TabsContent>
-    </Tabs>
-  </section>
-);
+        </TabsContent>
+      </Tabs>
+    </section>
+  );
+};

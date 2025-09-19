@@ -1,5 +1,7 @@
-export type CodeSnippet = {
-  language: string;
-  filename: string;
-  code: string;
-};
+export type CodeSnippet =
+  | React.ReactNode
+  | {
+      language?: string;
+      filename?: string;
+      code: string;
+    };

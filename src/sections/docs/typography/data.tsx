@@ -1,11 +1,20 @@
-// First, install the helper library if you haven't:
-// npm install react-element-to-jsx-string
-
+// @/sections/docs/typography/data.tsx
 import React from "react";
-import jsxToString from "react-element-to-jsx-string";
-import { CodeSnippet } from "@/types/code-snippet";
+import {
+  Hero,
+  H1,
+  H2,
+  H3,
+  H4,
+  H5,
+  H6,
+  Body,
+  BodySm,
+  BodyLg,
+  Caption,
+} from "@/components/app/typography";
 
-// Installation snippets as JSX
+// Installation snippets
 export const installSnippets = [
   {
     filename: "npm",
@@ -24,80 +33,39 @@ export const installSnippets = [
     code: `bun add @rds/typography`,
   },
 ];
-// Hero code
-const heroJSX = (
+
+// Hero example
+export const heroCode = (
   <div>
-    <h1 className="text-6xl font-extrabold tracking-tight">
-      Build with Confidence
-    </h1>
-    <p className="mt-4 text-xl text-muted-foreground">
+    <Hero>Build with Confidence</Hero>
+    <BodyLg className="mt-4 text-muted-foreground">
       A consistent typography system for your design system.
-    </p>
+    </BodyLg>
   </div>
 );
 
-export const heroCode: CodeSnippet[] = [
-  {
-    language: "tsx",
-    filename: "Hero.tsx",
-    code: jsxToString(heroJSX),
-  },
-];
-
-// Headings
-const headingsJSX = (
+// Headings example
+export const headingCode = (
   <div className="space-y-2">
-    <h1 className="text-4xl font-bold">Heading 1</h1>
-    <h2 className="text-3xl font-semibold">Heading 2</h2>
-    <h3 className="text-2xl font-semibold">Heading 3</h3>
-    <h4 className="text-xl font-medium">Heading 4</h4>
-    <h5 className="text-lg font-medium">Heading 5</h5>
-    <h6 className="text-base font-medium">Heading 6</h6>
+    <H1>Heading 1</H1>
+    <H2>Heading 2</H2>
+    <H3>Heading 3</H3>
+    <H4>Heading 4</H4>
+    <H5>Heading 5</H5>
+    <H6>Heading 6</H6>
   </div>
 );
 
-export const headingCode: CodeSnippet[] = [
-  {
-    language: "tsx",
-    filename: "Headings.tsx",
-    code: jsxToString(headingsJSX),
-  },
-];
-
-// Body
-const bodyJSX = (
+// Body example
+export const bodyCode = (
   <div className="space-y-2">
-    <p className="text-base">
-      Body text (base). This is the standard size for paragraphs.
-    </p>
-    <p className="text-sm">
-      Small text. Often used for secondary content or details.
-    </p>
-    <p className="text-lg">
-      Large text. Great for short descriptions or highlights.
-    </p>
+    <Body>Body text (base). This is the standard size for paragraphs.</Body>
+    <BodySm>Small text. Often used for secondary content or details.</BodySm>
+    <BodyLg>Large text. Great for short descriptions or highlights.</BodyLg>
   </div>
 );
 
-export const bodyCode: CodeSnippet[] = [
-  {
-    language: "tsx",
-    filename: "Body.tsx",
-    code: jsxToString(bodyJSX),
-  },
-];
-
-// Caption
-const captionJSX = (
-  <p className="text-sm text-muted-foreground">
-    Muted or caption text. Useful for hints, notes, or labels.
-  </p>
+// Caption example
+export const captionCode = (
+  <Caption>Muted or caption text. Useful for hints, notes, or labels.</Caption>
 );
-
-export const captionCode: CodeSnippet[] = [
-  {
-    language: "tsx",
-    filename: "Caption.tsx",
-    code: jsxToString(captionJSX),
-  },
-];

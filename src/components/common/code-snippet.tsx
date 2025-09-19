@@ -1,3 +1,4 @@
+// @/components/common/code-snippet.tsx
 import type { BundledLanguage } from "@/components/ui/kibo-ui/code-block";
 import {
   CodeBlock,
@@ -14,52 +15,66 @@ import {
   CodeBlockSelectTrigger,
   CodeBlockSelectValue,
 } from "@/components/ui/kibo-ui/code-block";
-import { CodeSnippet } from "@/types/code-snippet";
 
-// Reusable block for code snippets
+type NormalizedSnippet = {
+  language?: string;
+  filename?: string;
+  code: string;
+};
+
 export const SnippetBlock = ({
   data,
   defaultValue,
 }: {
-  data: CodeSnippet[];
+  data: NormalizedSnippet[];
   defaultValue?: string;
 }) => (
-  <CodeBlock data={data} defaultValue={defaultValue ?? data[0].language}>
+  <CodeBlock
+    data={data}
+    defaultValue={defaultValue ?? data[0].language ?? "tsx"}
+  >
     <CodeBlockHeader>
-      <CodeBlockFiles>
-        {(item) => (
-          <CodeBlockFilename
-            key={`${item.language}-${item.filename}`}
-            value={item.language}
-          >
-            {item.filename}
-          </CodeBlockFilename>
-        )}
-      </CodeBlockFiles>
-      <CodeBlockSelect>
-        <CodeBlockSelectTrigger>
-          <CodeBlockSelectValue />
-        </CodeBlockSelectTrigger>
-        <CodeBlockSelectContent>
-          {(item) => (
-            <CodeBlockSelectItem
-              key={`${item.language}-${item.filename}`}
-              value={item.language}
-            >
-              {item.filename}
-            </CodeBlockSelectItem>
-          )}
-        </CodeBlockSelectContent>
-      </CodeBlockSelect>
+      {data.some((d) => d.filename) && (
+        <>
+          <CodeBlockFiles>
+            {(item) => (
+              <CodeBlockFilename
+                key={`${item.language}-${item.filename}`}
+                value={item.language}
+              >
+                {item.filename}
+              </CodeBlockFilename>
+            )}
+          </CodeBlockFiles>
+          <CodeBlockSelect>
+            <CodeBlockSelectTrigger>
+              <CodeBlockSelectValue />
+            </CodeBlockSelectTrigger>
+            <CodeBlockSelectContent>
+              {(item) => (
+                <CodeBlockSelectItem
+                  key={`${item.language}-${item.filename}`}
+                  value={item.language}
+                >
+                  {item.filename ?? item.language}
+                </CodeBlockSelectItem>
+              )}
+            </CodeBlockSelectContent>
+          </CodeBlockSelect>
+        </>
+      )}
       <CodeBlockCopyButton />
     </CodeBlockHeader>
+
     <CodeBlockBody>
       {(item) => (
         <CodeBlockItem
           key={`${item.language}-${item.filename}`}
           value={item.language}
         >
-          <CodeBlockContent language={item.language as BundledLanguage}>
+          <CodeBlockContent
+            language={(item.language ?? "tsx") as BundledLanguage}
+          >
             {item.code}
           </CodeBlockContent>
         </CodeBlockItem>
