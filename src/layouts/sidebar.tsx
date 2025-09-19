@@ -30,6 +30,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import Link from "next/link";
 
 // Sidebar groups
 const foundationItems = [
@@ -89,10 +90,10 @@ export function AppSidebar() {
                   <SidebarMenuItem key={item.title}>
                     <MaybeTooltip label={item.title}>
                       <SidebarMenuButton asChild>
-                        <a href={item.url}>
+                        <Link href={item.url}>
                           <item.icon className="h-4 w-4" />
                           <span>{item.title}</span>
-                        </a>
+                        </Link>
                       </SidebarMenuButton>
                     </MaybeTooltip>
                   </SidebarMenuItem>

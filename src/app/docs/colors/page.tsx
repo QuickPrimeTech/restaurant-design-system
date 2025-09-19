@@ -1,6 +1,7 @@
 // @/app/docs/colors/page.tsx
 "use client";
 
+import { BodyLg, H1 } from "@/components/app/typography";
 import { DocSection } from "@/components/common/doc-section";
 import { BackgroundGradient } from "@/components/ui/background-gradient";
 import { Button } from "@/components/ui/button";
@@ -151,5 +152,81 @@ function ColorToken({
 }
 
 export default function ColorsPage() {
-  return <div>test</div>;
+  return (
+    <div className="space-y-16">
+      <header className="space-y-2">
+        <H1 className="font-extrabold">Colors</H1>
+        <BodyLg className="text-muted-foreground">
+          Design tokens that define the visual identity of the system. Each
+          token has a clear purpose: background, text, borders, accents,
+          semantic states, or charts.
+        </BodyLg>
+      </header>
+
+      {/* Base Colors */}
+      <DocSection
+        title="Base Colors"
+        description="Foundational colors for backgrounds, text, borders, inputs, and focus rings."
+        code={
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {tokens.base.map((t) => (
+              <ColorToken key={t.token} {...t} />
+            ))}
+          </div>
+        }
+      />
+
+      {/* Semantic */}
+      <DocSection
+        title="Semantic Colors"
+        description="Brand, secondary, accents, muted tones, and destructive states."
+        code={
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {tokens.semantic.map((t) => (
+              <ColorToken key={t.token} {...t} />
+            ))}
+          </div>
+        }
+      />
+
+      {/* Surfaces */}
+      <DocSection
+        title="Surfaces"
+        description="Cards, popovers, and their foregrounds."
+        code={
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {tokens.surfaces.map((t) => (
+              <ColorToken key={t.token} {...t} />
+            ))}
+          </div>
+        }
+      />
+
+      {/* Charts */}
+      <DocSection
+        title="Chart Colors"
+        description="Categorical colors for data visualizations."
+        code={
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {tokens.charts.map((t) => (
+              <ColorToken key={t.token} {...t} />
+            ))}
+          </div>
+        }
+      />
+
+      {/* Sidebar */}
+      <DocSection
+        title="Sidebar"
+        description="Specialized tokens for navigation surfaces."
+        code={
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {tokens.sidebar.map((t) => (
+              <ColorToken key={t.token} {...t} />
+            ))}
+          </div>
+        }
+      />
+    </div>
+  );
 }
