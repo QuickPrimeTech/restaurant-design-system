@@ -1,0 +1,58 @@
+"use client";
+
+import { useState } from "react";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { InstallSnippet as InstallSnippetType } from "@/types/install-guide";
+import { BackgroundGradient } from "../ui/background-gradient";
+import { Check, Copy } from "lucide-react"; // Make sure lucide-react is installed
+import { Button } from "../ui/button";
+
+type InstallSnippetProps = {
+  installSnippets: InstallSnippetType[];
+};
+
+export const InstallSnippet = ({ installSnippets }: InstallSnippetProps) => {
+  const [copied, setCopied] = useState<string | null>(null);
+
+  const handleCopy = (code: string, key: string) => {
+    navigator.clipboard.writeText(code);
+    setCopied(key);
+    setTimeout(() => setCopied(null), 2000);
+  };
+
+  return (
+    <div>
+      <h3 className="text-lg font-semibold mb-2">Installation</h3>
+      <Tabs
+        defaultValue={installSnippets[0]?.filename ?? "pnpm"}
+        className="w-full"
+      >
+        <div className="flex justify-between">
+          <TabsList className="mb-2">
+            {installSnippets.map((snippet: InstallSnippetType) => (
+              <TabsTrigger key={snippet.filename} value={snippet.filename}>
+                {snippet.filename}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </div>
+
+        {installSnippets.map((snippet: InstallSnippetType) => (
+          <TabsContent key={snippet.filename} value={snippet.filename}>
+            <BackgroundGradient className="rounded-sm flex items-center justify-between p-4 bg-background relative">
+              <pre className="whitespace-pre-wrap break-words font-mono text-sm text-foreground">
+                {snippet.code}
+              </pre>
+              <Button
+                variant={"ghost"}
+                onClick={() => handleCopy(snippet.code, snippet.filename)}
+              >
+                {copied === snippet.filename ? <Check /> : <Copy />}
+              </Button>
+            </BackgroundGradient>
+          </TabsContent>
+        ))}
+      </Tabs>
+    </div>
+  );
+};
