@@ -48,7 +48,7 @@ export function Navbar({
     <NavbarContext.Provider value={{ isScrolled, isHome }}>
       <nav
         className={cn(
-          "sticky top-0 w-full z-50 transition-all duration-300",
+          "sticky container px-4 mx-auto py-3 top-0 w-full z-50 transition-all duration-300",
           className
         )}
       >

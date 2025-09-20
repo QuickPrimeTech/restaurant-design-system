@@ -5,9 +5,12 @@ import { Header, PageH1, PageParagraph } from "@/components/header";
 import {
   installSnippets,
   basicNavbarCode,
-  logoOnlyCode,
-  linksOnlyCode,
-  withCTAsCode,
+  centeredLinksNavbar,
+  splitNavbar,
+  underlineLeftNavbar,
+  underlineCenterNavbar,
+  highlightNavbar,
+  gradientUnderlineNavbar,
 } from "@/examples/components/navbar";
 
 export default function NavbarPage() {
@@ -18,8 +21,8 @@ export default function NavbarPage() {
         <PageH1>Navbar Component</PageH1>
         <PageParagraph>
           A responsive, modular navigation bar with logo, links,
-          call-to-actions, and mobile support. Easily customizable for different
-          layouts and scroll behaviors.
+          call-to-actions, and mobile support. Explore different layout patterns
+          and hover effects built on top of the base components.
         </PageParagraph>
       </Header>
 
@@ -34,21 +37,39 @@ export default function NavbarPage() {
       />
 
       <DocSection
-        title="Logo Only"
-        description="A minimal navbar variant that only displays the brand logo."
-        code={logoOnlyCode}
+        title="Centered Links"
+        description="Center your navigation links with spacers on each side."
+        code={centeredLinksNavbar}
       />
 
       <DocSection
-        title="Links Only"
-        description="A simple navbar with just navigation links for lightweight layouts."
-        code={linksOnlyCode}
+        title="Split Layout"
+        description="Keep links aligned left while placing CTAs on the right."
+        code={splitNavbar}
       />
 
       <DocSection
-        title="With CTAs"
-        description="A navbar variant that focuses on call-to-action buttons like reservation or ordering."
-        code={withCTAsCode}
+        title="Underline From Left"
+        description="A hover effect where underline grows from the left side."
+        code={underlineLeftNavbar}
+      />
+
+      <DocSection
+        title="Underline From Center"
+        description="A hover effect where underline expands from the center outward."
+        code={underlineCenterNavbar}
+      />
+
+      <DocSection
+        title="Highlight Background"
+        description="A hover effect where the link is highlighted with a subtle background."
+        code={highlightNavbar}
+      />
+
+      <DocSection
+        title="Gradient Underline"
+        description="An animated gradient underline hover effect."
+        code={gradientUnderlineNavbar}
       />
     </div>
   );

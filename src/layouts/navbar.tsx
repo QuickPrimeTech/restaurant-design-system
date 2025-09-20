@@ -1,4 +1,5 @@
 // @/layouts/navbar.tsx
+
 "use client";
 
 import Link from "next/link";
@@ -14,96 +15,140 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-export default function Navbar() {
-  const pathname = usePathname();
+import {
+  Navbar,
+  NavbarLogo,
+  NavbarLinks,
+  NavbarLink,
+  NavbarCTAs,
+  NavbarMobile,
+  NavbarMobileTrigger,
+  NavbarMobileContent,
+  NavbarMobileHeader,
+  NavbarMobileDescription,
+} from "@/components/app/navbar";
+import { Card } from "@/components/ui/card";
 
+export default function AppNavbar() {
+  const pathname = usePathname();
   const showSidebarTrigger = pathname !== "/";
 
-  // Only call useSidebar if we are on /docs
+  // only safe to call if inside /docs
   const { toggleSidebar, state } = useSidebar();
-
   const isCollapsed = state === "collapsed";
 
   return (
-    <nav className="w-full border-b bg-background sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
-        <div className="flex gap-6 items-center">
-          {/* Sidebar Trigger (only on /docs routes) */}
-          {showSidebarTrigger && (
-            <TooltipProvider delayDuration={200}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="rounded-full"
-                    onClick={toggleSidebar}
-                    aria-label="Toggle sidebar"
-                  >
-                    {isCollapsed ? (
-                      <PanelLeftOpen className="h-5 w-5" />
-                    ) : (
-                      <PanelLeftClose className="h-5 w-5" />
-                    )}
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent side="bottom">
-                  {isCollapsed ? "Open sidebar" : "Close sidebar"}
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          )}
+    <Navbar className="border-b bg-background">
+      <div className="flex items-center gap-6">
+        {/* Sidebar Trigger (only on /docs routes) */}
+        {showSidebarTrigger && (
+          <TooltipProvider delayDuration={200}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full"
+                  onClick={toggleSidebar}
+                  aria-label="Toggle sidebar"
+                >
+                  {isCollapsed ? (
+                    <PanelLeftOpen className="size-5" />
+                  ) : (
+                    <PanelLeftClose className="size-5" />
+                  )}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="bottom">
+                {isCollapsed ? "Open sidebar" : "Close sidebar"}
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        )}
 
-          {/* Logo / Brand */}
-          <Link href="/" className="text-xl font-bold tracking-tight">
-            RDS
-          </Link>
-        </div>
-
-        {/* Links */}
-        <div className="hidden sm:flex gap-6 text-sm font-medium">
-          <Link href="/" className="hover:text-primary transition-colors">
-            Home
-          </Link>
-          <Link
-            href="/components"
-            className="hover:text-primary transition-colors"
-          >
-            Components
-          </Link>
-          <Link href="/docs" className="hover:text-primary transition-colors">
-            Docs
-          </Link>
-        </div>
-
-        {/* Actions */}
-        <div className="flex items-center gap-2">
-          <Button
-            variant="secondary"
-            size="icon"
-            className="rounded-full"
-            aria-label="Search"
-          >
-            <Search className="size-5" />
-          </Button>
-          <Button
-            variant="secondary"
-            size="icon"
-            className="rounded-full"
-            asChild
-            aria-label="GitHub Repository"
-          >
-            <Link
-              href="https://github.com/QuickPrimeTech/restaurant-design-system"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Github className="size-5" />
-            </Link>
-          </Button>
-          <ModeToggle />
-        </div>
+        {/* Logo */}
+        <NavbarLogo
+          src="/logo.svg"
+          alt="Restaurant Design System Logo"
+          name="RDS"
+        />
       </div>
-    </nav>
+
+      {/* Desktop Links */}
+      <NavbarLinks>
+        <NavbarLink href="/">Home</NavbarLink>
+        <NavbarLink href="/components">Components</NavbarLink>
+        <NavbarLink href="/docs">Docs</NavbarLink>
+      </NavbarLinks>
+
+      {/* CTAs */}
+      <NavbarCTAs>
+        <Button
+          variant="secondary"
+          size="icon"
+          className="rounded-full"
+          aria-label="Search"
+        >
+          <Search className="size-5" />
+        </Button>
+        <Button
+          variant="secondary"
+          size="icon"
+          className="rounded-full"
+          asChild
+          aria-label="GitHub Repository"
+        >
+          <Link
+            href="https://github.com/QuickPrimeTech/restaurant-design-system"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Github className="size-5" />
+          </Link>
+        </Button>
+        <ModeToggle />
+      </NavbarCTAs>
+
+      {/* Mobile Menu */}
+      <NavbarMobile>
+        <NavbarMobileTrigger />
+        <NavbarMobileContent>
+          <NavbarMobileHeader>
+            <NavbarLogo
+              src="/logo.svg"
+              alt="Restaurant Design System Logo"
+              name="RDS"
+            />
+          </NavbarMobileHeader>
+          <NavbarMobileDescription>
+            A modular restaurant design system.
+          </NavbarMobileDescription>
+
+          <div className="flex flex-col gap-2 mt-6">
+            <NavbarLink href="/">Home</NavbarLink>
+            <NavbarLink href="/components">Components</NavbarLink>
+            <NavbarLink href="/docs">Docs</NavbarLink>
+          </div>
+
+          <Card className="flex gap-2 mt-6">
+            <Button
+              asChild
+              variant="secondary"
+              size="icon"
+              className="rounded-full"
+            >
+              <Link
+                href="https://github.com/QuickPrimeTech/restaurant-design-system"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Github className="size-5" />
+              </Link>
+            </Button>
+            <ModeToggle />
+          </Card>
+        </NavbarMobileContent>
+      </NavbarMobile>
+    </Navbar>
   );
 }
