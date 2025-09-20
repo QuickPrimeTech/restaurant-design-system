@@ -17,8 +17,8 @@ import {
 export default function Navbar() {
   const pathname = usePathname();
 
-  // Only true when inside /docs routes
-  const isDocsPage = pathname.startsWith("/docs");
+  const showSidebarTrigger = pathname !== "/";
+
   // Only call useSidebar if we are on /docs
   const { toggleSidebar, state } = useSidebar();
 
@@ -29,7 +29,7 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
         <div className="flex gap-6 items-center">
           {/* Sidebar Trigger (only on /docs routes) */}
-          {isDocsPage && (
+          {showSidebarTrigger && (
             <TooltipProvider delayDuration={200}>
               <Tooltip>
                 <TooltipTrigger asChild>

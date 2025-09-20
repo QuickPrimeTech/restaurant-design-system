@@ -9,11 +9,6 @@ import {
   CodeBlockFiles,
   CodeBlockHeader,
   CodeBlockItem,
-  CodeBlockSelect,
-  CodeBlockSelectContent,
-  CodeBlockSelectItem,
-  CodeBlockSelectTrigger,
-  CodeBlockSelectValue,
 } from "@/components/ui/kibo-ui/code-block";
 
 type NormalizedSnippet = {

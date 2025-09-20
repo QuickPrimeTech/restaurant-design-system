@@ -31,6 +31,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import Link from "next/link";
+import { componentsCatalog } from "@/data/components-catalog";
 
 // Sidebar groups
 const foundationItems = [
@@ -38,19 +39,6 @@ const foundationItems = [
   { title: "Typography", url: "/docs/typography", icon: Type },
   { title: "Colors", url: "/docs/colors", icon: Palette },
   { title: "Layout", url: "/docs/layout", icon: LayoutPanelLeft },
-];
-
-const componentItems = [
-  { title: "Button", url: "/components/button", icon: Square },
-  { title: "Input", url: "/components/input", icon: Component },
-  { title: "Card", url: "/components/card", icon: Layers },
-  { title: "Navbar", url: "/components/navbar", icon: LayoutPanelLeft },
-  { title: "Sidebar", url: "/components/sidebar", icon: LayoutPanelLeft },
-];
-
-const systemItems = [
-  { title: "Home", url: "/", icon: Home },
-  { title: "Settings", url: "/settings", icon: Cog },
 ];
 
 // A small helper so we don't repeat tooltip condition everywhere
@@ -103,46 +91,27 @@ export function AppSidebar() {
           </SidebarGroup>
 
           {/* Components */}
-          <SidebarGroup>
-            <SidebarGroupLabel>Components</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {componentItems.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <MaybeTooltip label={item.title}>
-                      <SidebarMenuButton asChild>
-                        <a href={item.url}>
-                          <item.icon className="h-4 w-4" />
-                          <span>{item.title}</span>
-                        </a>
-                      </SidebarMenuButton>
-                    </MaybeTooltip>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-
-          {/* System */}
-          <SidebarGroup>
-            <SidebarGroupLabel>System</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {systemItems.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <MaybeTooltip label={item.title}>
-                      <SidebarMenuButton asChild>
-                        <a href={item.url}>
-                          <item.icon className="h-4 w-4" />
-                          <span>{item.title}</span>
-                        </a>
-                      </SidebarMenuButton>
-                    </MaybeTooltip>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
+          {componentsCatalog.map((catalog) => (
+            <SidebarGroup>
+              <SidebarGroupLabel>{catalog.category}</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {catalog.items.map((item) => (
+                    <SidebarMenuItem key={item.title}>
+                      <MaybeTooltip label={item.title}>
+                        <SidebarMenuButton asChild>
+                          <a href={item.link}>
+                            <Component className="h-4 w-4" />
+                            <span>{item.title}</span>
+                          </a>
+                        </SidebarMenuButton>
+                      </MaybeTooltip>
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          ))}
         </TooltipProvider>
       </SidebarContent>
     </Sidebar>
