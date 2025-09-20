@@ -14,7 +14,7 @@ import {
   SheetContent,
   SheetDescription,
   SheetTitle,
-} from "../ui/sheet";
+} from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 
 type NavbarContextType = {
@@ -248,3 +248,18 @@ export function NavbarMobileDescription({
     </SheetDescription>
   );
 }
+
+/* -------------------
+   Add display names
+------------------- */
+Navbar.displayName = "Navbar";
+NavbarLogo.displayName = "NavbarLogo";
+NavbarLinks.displayName = "NavbarLinks";
+NavbarLink.displayName = "NavbarLink";
+NavbarCTAs.displayName = "NavbarCTAs";
+NavbarCTA.displayName = "NavbarCTA";
+NavbarMobile.displayName = "NavbarMobile";
+NavbarMobileTrigger.displayName = "NavbarMobileTrigger";
+NavbarMobileContent.displayName = "NavbarMobileContent";
+NavbarMobileHeader.displayName = "NavbarMobileHeader";
+NavbarMobileDescription.displayName = "NavbarMobileDescription";

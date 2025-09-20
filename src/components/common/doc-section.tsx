@@ -1,6 +1,7 @@
 // @/components/common/doc-section.tsx
 "use client";
-import React from "react";
+
+import React, { ReactNode } from "react";
 import jsxToString from "react-element-to-jsx-string";
 import { SnippetBlock } from "./code-snippet";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -43,6 +44,28 @@ export const DocSection = ({
           showDefaultProps: false,
           showFunctions: true,
           useBooleanShorthandSyntax: false,
+          displayName: (el: React.ReactNode) => {
+            if (!React.isValidElement(el)) return "Component";
+
+            const type = el.type;
+
+            // If it's a string (HTML element like 'div', 'span')
+            if (typeof type === "string") return type;
+
+            // If it's a function or class component, check for displayName
+            if (
+              typeof type === "function" &&
+              "displayName" in type &&
+              typeof (type as { displayName?: string }).displayName === "string"
+            ) {
+              return (type as { displayName?: string }).displayName!;
+            }
+
+            // If it's a function or class without displayName, fallback to its name
+            if (typeof type === "function" && type.name) return type.name;
+
+            return "Component"; // fallback for fragments, symbols, etc.
+          },
         }),
       },
     ];

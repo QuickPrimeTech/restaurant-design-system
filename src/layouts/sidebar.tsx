@@ -1,15 +1,11 @@
 "use client";
 
 import {
-  Home,
   SquareTerminal,
   Palette,
   Type,
   LayoutPanelLeft,
-  Square,
-  Layers,
   Component,
-  Cog,
 } from "lucide-react";
 
 import {

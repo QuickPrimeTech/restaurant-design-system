@@ -79,3 +79,19 @@ export const Caption = ({ children, className, ...props }: TypographyProps) => (
     {children}
   </p>
 );
+
+/* -------------------
+   Add display names
+------------------- */
+Hero.displayName = "Hero";
+H1.displayName = "H1";
+H2.displayName = "H2";
+H3.displayName = "H3";
+H4.displayName = "H4";
+
+H5.displayName = "H5";
+H6.displayName = "H6";
+Body.displayName = "Body";
+BodySm.displayName = "BodySm";
+BodyLg.displayName = "BodyLg";
+Caption.displayName = "Caption";
