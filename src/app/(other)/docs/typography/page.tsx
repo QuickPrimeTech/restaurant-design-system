@@ -2,21 +2,29 @@
 "use client";
 
 import { DocSection } from "@/components/common/doc-section";
-import { Header } from "@/sections/docs/typography/header";
 import {
   installSnippets,
   heroCode,
   headingCode,
   bodyCode,
   captionCode,
-} from "@/sections/docs/typography/data";
+} from "@/examples/typography";
 import { InstallSnippet } from "@/components/common/install-snippet";
+import { Header, PageH1, PageParagraph } from "@/components/header";
 
 export default function TypographyPage() {
   return (
     <div className="space-y-16">
       {/* Page Header */}
-      <Header />
+      <Header>
+        <PageH1>Typography</PageH1>
+        <PageParagraph>
+          A unified system of type scales, sizes, and styles for building
+          consistent interfaces.
+        </PageParagraph>
+      </Header>
+
+      {/* Install Snippet */}
       <InstallSnippet installSnippets={installSnippets} />
 
       {/* Sections */}
