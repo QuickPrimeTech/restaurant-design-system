@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { InstallSnippet as InstallSnippetType } from "@/types/install-guide";
 import { BackgroundGradient } from "../ui/background-gradient";
-import { Check, Copy } from "lucide-react"; // Make sure lucide-react is installed
+import { Check, Copy } from "lucide-react";
 import { Button } from "../ui/button";
 import { H2 } from "@/components/app/typography";
 
@@ -12,8 +12,27 @@ type InstallSnippetProps = {
   installSnippets: InstallSnippetType[];
 };
 
+const STORAGE_KEY = "install-preference";
+
 export const InstallSnippet = ({ installSnippets }: InstallSnippetProps) => {
   const [copied, setCopied] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<string>(
+    installSnippets[0]?.filename ?? "pnpm"
+  );
+
+  // Load preference on mount
+  useEffect(() => {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored && installSnippets.some((s) => s.filename === stored)) {
+      setActiveTab(stored);
+    }
+  }, [installSnippets]);
+
+  // Save preference when user changes tab
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+    localStorage.setItem(STORAGE_KEY, value);
+  };
 
   const handleCopy = (code: string, key: string) => {
     navigator.clipboard.writeText(code);
@@ -25,7 +44,8 @@ export const InstallSnippet = ({ installSnippets }: InstallSnippetProps) => {
     <div>
       <H2 className="mb-2">Installation</H2>
       <Tabs
-        defaultValue={installSnippets[0]?.filename ?? "pnpm"}
+        value={activeTab}
+        onValueChange={handleTabChange}
         className="w-full"
       >
         <div className="flex justify-between">
@@ -45,7 +65,7 @@ export const InstallSnippet = ({ installSnippets }: InstallSnippetProps) => {
                 {snippet.code}
               </pre>
               <Button
-                variant={"ghost"}
+                variant="ghost"
                 onClick={() => handleCopy(snippet.code, snippet.filename)}
               >
                 {copied === snippet.filename ? <Check /> : <Copy />}

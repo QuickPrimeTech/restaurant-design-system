@@ -8,7 +8,7 @@ import {
   headingCode,
   bodyCode,
   captionCode,
-} from "@/examples/typography";
+} from "@/examples/docs/typography";
 import { InstallSnippet } from "@/components/common/install-snippet";
 import { Header, PageH1, PageParagraph } from "@/components/header";
 

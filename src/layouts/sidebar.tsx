@@ -91,19 +91,19 @@ export function AppSidebar() {
           </SidebarGroup>
 
           {/* Components */}
-          {componentsCatalog.map((catalog) => (
-            <SidebarGroup>
+          {componentsCatalog.map((catalog, key) => (
+            <SidebarGroup key={key}>
               <SidebarGroupLabel>{catalog.category}</SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  {catalog.items.map((item) => (
-                    <SidebarMenuItem key={item.title}>
+                  {catalog.items.map((item, key) => (
+                    <SidebarMenuItem key={`${key}-${key}`}>
                       <MaybeTooltip label={item.title}>
                         <SidebarMenuButton asChild>
-                          <a href={item.link}>
+                          <Link href={item.link}>
                             <Component className="h-4 w-4" />
                             <span>{item.title}</span>
-                          </a>
+                          </Link>
                         </SidebarMenuButton>
                       </MaybeTooltip>
                     </SidebarMenuItem>

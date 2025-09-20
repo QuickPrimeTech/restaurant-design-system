@@ -8,7 +8,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetTrigger, SheetContent } from "../ui/sheet";
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetDescription,
+  SheetTitle,
+} from "../ui/sheet";
 import { Menu } from "lucide-react";
 
 type NavbarContextType = {
@@ -42,7 +48,7 @@ export function Navbar({
     <NavbarContext.Provider value={{ isScrolled, isHome }}>
       <nav
         className={cn(
-          "fixed top-0 w-full z-50 transition-all duration-300",
+          "sticky top-0 w-full z-50 transition-all duration-300",
           className
         )}
       >
@@ -65,13 +71,8 @@ export function NavbarLogo({
 }) {
   return (
     <Link href="/" className="flex items-center space-x-3">
-      <div className="relative w-10 h-10 rounded-full overflow-hidden ring-2 ring-primary">
-        <Image
-          fill
-          src={src}
-          alt={alt}
-          className="object-cover w-full h-full"
-        />
+      <div className="relative w-10 h-10 rounded-full ring-2 ring-primary">
+        <Image fill src={src} alt={alt} className="object-cover" />
       </div>
       {name && (
         <span className="font-serif text-xl font-bold text-primary">
@@ -160,11 +161,90 @@ export function NavbarMobile({
         </SheetTrigger>
         <SheetContent
           side={side}
-          className="w-3/4 md:w-1/2 flex flex-col gap-2 pt-10 section-x section-y rounded-l-2xl"
+          className="w-3/4 md:w-1/2 flex flex-col gap-2 px-4 pt-10 section-x section-y rounded-l-2xl"
         >
           {children}
         </SheetContent>
       </Sheet>
     </div>
+  );
+}
+
+export function NavbarMobileTrigger({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof Button>) {
+  const { isScrolled, isHome } = useNavbar();
+
+  return (
+    <SheetTrigger asChild>
+      <Button
+        variant="ghost"
+        size="icon"
+        aria-label="Open navigation menu"
+        className={cn(
+          isHome && !isScrolled ? "text-white" : "text-foreground",
+          "focus-visible:ring-0",
+          className
+        )}
+        {...props}
+      >
+        {children ?? <Menu className="size-6" />}
+      </Button>
+    </SheetTrigger>
+  );
+}
+
+export function NavbarMobileContent({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof SheetContent>) {
+  return (
+    <SheetContent
+      className={cn(
+        "w-3/4 md:w-1/2 flex flex-col gap-2 px-4 pt-10 section-x section-y rounded-l-2xl",
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </SheetContent>
+  );
+}
+
+// Mobile sheet header (logo + name + optional description)
+export function NavbarMobileHeader({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof SheetTitle>) {
+  return (
+    <SheetTitle
+      className={cn(
+        "flex items-center gap-3 font-semibold text-lg text-foreground",
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </SheetTitle>
+  );
+}
+
+// Optional description (subtitle under logo/name)
+export function NavbarMobileDescription({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof SheetDescription>) {
+  return (
+    <SheetDescription
+      className={cn("text-sm text-muted-foreground", className)}
+      {...props}
+    >
+      {children}
+    </SheetDescription>
   );
 }
