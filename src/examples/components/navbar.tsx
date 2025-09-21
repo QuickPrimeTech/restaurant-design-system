@@ -10,7 +10,7 @@ import {
   NavbarCTAs,
   NavbarCTA,
   NavbarMobile,
-} from "@/components/app/navbar";
+} from "@/components/app-ui/navbar";
 
 // Installation snippets
 export const installSnippets = [

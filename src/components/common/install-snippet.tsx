@@ -6,7 +6,7 @@ import { InstallSnippet as InstallSnippetType } from "@/types/install-guide";
 import { BackgroundGradient } from "../ui/background-gradient";
 import { Check, Copy } from "lucide-react";
 import { Button } from "../ui/button";
-import { H2 } from "@/components/app/typography";
+import { H2 } from "@/components/app-ui/typography";
 
 type InstallSnippetProps = {
   installSnippets: InstallSnippetType[];

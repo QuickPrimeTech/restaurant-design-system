@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { BodyLg, H1 } from "./app/typography";
+import { BodyLg, H1 } from "./app-ui/typography";
 
 interface ChildrenProps {
   children: ReactNode;

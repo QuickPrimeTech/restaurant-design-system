@@ -1,14 +1,14 @@
 // @/components/common/doc-section.tsx
 "use client";
 
-import React, { ReactNode } from "react";
+import React from "react";
 import jsxToString from "react-element-to-jsx-string";
 import { SnippetBlock } from "./code-snippet";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { InstallSnippet } from "./install-snippet";
 import { InstallSnippet as InstallSnippetType } from "@/types/install-guide";
 import { CodeSnippet } from "@/types/code-snippet";
-import { Body, H2 } from "@/components/app/typography";
+import { Body, H2 } from "@/components/app-ui/typography";
 
 type DocSectionProps = {
   title: string;

@@ -1,4 +1,4 @@
-// @/components/app/typography.tsx
+// @/components/app-ui/typography.tsx
 import { ReactNode, HTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
 

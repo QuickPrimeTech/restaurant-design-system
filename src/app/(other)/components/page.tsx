@@ -1,6 +1,6 @@
 // app/components/page.tsx
 
-import { H2, Hero, BodyLg } from "@/components/app/typography";
+import { H2, Hero, BodyLg } from "@/components/app-ui/typography";
 import { componentsCatalog } from "@/data/components-catalog";
 import { HoverEffect } from "@/components/ui/card-hover-effect";
 import { BackgroundBeams } from "@/components/ui/background-beams";

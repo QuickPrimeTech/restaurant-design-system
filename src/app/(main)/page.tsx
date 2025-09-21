@@ -5,7 +5,13 @@ import { Utensils, Layout, Smartphone, Palette } from "lucide-react";
 import Link from "next/link";
 
 // Typography components
-import { Hero, H3, Body, Caption, BodyLg } from "@/components/app/typography";
+import {
+  Hero,
+  H3,
+  Body,
+  Caption,
+  BodyLg,
+} from "@/components/app-ui/typography";
 
 export default function Home() {
   return (

@@ -26,7 +26,7 @@ import {
   NavbarMobileContent,
   NavbarMobileHeader,
   NavbarMobileDescription,
-} from "@/components/app/navbar";
+} from "@/components/app-ui/navbar";
 import { Card } from "@/components/ui/card";
 
 export default function AppNavbar() {

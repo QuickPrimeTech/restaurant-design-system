@@ -12,7 +12,7 @@ import {
   BodySm,
   BodyLg,
   Caption,
-} from "@/components/app/typography";
+} from "@/components/app-ui/typography";
 
 // Installation snippets
 export const installSnippets = [

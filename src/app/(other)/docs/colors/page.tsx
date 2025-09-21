@@ -1,7 +1,7 @@
 // @/app/docs/colors/page.tsx
 "use client";
 
-import { BodyLg, H1 } from "@/components/app/typography";
+import { BodyLg, H1 } from "@/components/app-ui/typography";
 import { DocSection } from "@/components/common/doc-section";
 import { BackgroundGradient } from "@/components/ui/background-gradient";
 import { Button } from "@/components/ui/button";
@@ -118,7 +118,7 @@ function ColorToken({
   token: string;
   desc: string;
 }) {
-  const [copied, setCopied] = useState(false);
+  const [, setCopied] = useState(false);
   const value = `var(--${token})`;
 
   const copyToClipboard = async () => {
